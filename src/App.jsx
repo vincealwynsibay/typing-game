@@ -19,13 +19,7 @@ function App() {
   const difficulties = ["easy", "medium", "hard"];
 
   useEffect(() => {
-    if (
-      !gameState ||
-      gameState === "set" ||
-      gameState === "winner" ||
-      gameState === "lost"
-    )
-      return;
+    if (!gameState) return;
     const timer = setInterval(() => {
       setDuration((prevDuration) => prevDuration - 1);
     }, 1000);
@@ -75,9 +69,12 @@ function App() {
         (gameState === "winner" && (
           <button onClick={handleRestart}>Restart</button>
         ))}
+
       {<Select handleState={handleDifficulty} states={difficulties} />}
       {<Select handleState={handleDuration} label={"s"} states={durations} />}
+
       {gameState === "playing" && <p>{duration} left</p>}
+
       {gameState === "winner" && (
         <>
           <p>
@@ -92,16 +89,14 @@ function App() {
           <p>You Lost. Try Again.</p>
         </>
       )}
-      {
-        <Typing
-          scores={scores}
-          handleScores={setScores}
-          handleGameState={setGameState}
-          gameState={gameState}
-          difficulty={difficulty}
-          totalDuration={totalDuration}
-        />
-      }
+      <Typing
+        scores={scores}
+        handleScores={setScores}
+        handleGameState={setGameState}
+        gameState={gameState}
+        difficulty={difficulty}
+        totalDuration={totalDuration}
+      />
     </div>
   );
 }

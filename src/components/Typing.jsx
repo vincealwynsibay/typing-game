@@ -9,7 +9,7 @@ function Typing({
   difficulty,
   totalDuration,
 }) {
-  const [answer, setAnswer] = useState("nice");
+  const [answer, setAnswer] = useState("");
   const [input, setInput] = useState("");
   const [selectedKey, setSelectedKey] = useState("");
 
@@ -46,14 +46,12 @@ function Typing({
 
       handleGameState(() => "playing");
       var audio = new Audio("./click1.mp3");
+
       if (e.key === "Backspace") {
         audio.play();
         setInput((c) => c.substring(0, c.length - 1));
         setSelectedKey("Backspace");
-        return;
-      }
-
-      if (
+      } else if (
         parseInt(e.keyCode) >= 65 &&
         parseInt(e.keyCode) <= 90 &&
         !(e.getModifierState("CapsLock") || e.shiftKey)
@@ -113,7 +111,6 @@ function Typing({
     }
     if (answer === input) {
       handleGameState(() => "winner");
-      console.log("congratulations");
     }
   }, [input]);
 
